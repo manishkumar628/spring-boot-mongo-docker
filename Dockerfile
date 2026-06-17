@@ -1,13 +1,17 @@
-FROM openjdk:8-alpine
+FROM eclipse-temurin:8-jdk-alpine
 
-# Required for starting application up.
-RUN apk update && apk add /bin/sh
+LABEL maintainer="MithunTechnologies"
 
-RUN mkdir -p /opt/app
-ENV PROJECT_HOME /opt/app
+RUN apk update && apk add --no-cache bash
+
+RUN mkdir -p /opt/application
+
+ENV PROJECT_HOME=/opt/application
 
 COPY target/spring-boot-mongo-1.0.jar $PROJECT_HOME/spring-boot-mongo.jar
 
 WORKDIR $PROJECT_HOME
+
 EXPOSE 8080
-CMD ["java" ,"-jar","./spring-boot-mongo.jar"]
+
+CMD ["java", "-jar", "spring-boot-mongo.jar"]
